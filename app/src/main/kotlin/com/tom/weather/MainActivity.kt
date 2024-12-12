@@ -1,6 +1,7 @@
 package com.tom.weather
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,9 +12,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.tom.weather.location.UserLocationProvider
 import com.tom.weather.ui.theme.WeatherTheme
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
+    private val userLocationProvider: UserLocationProvider by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -25,6 +35,13 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
+            }
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(state = Lifecycle.State.RESUMED) {
+                userLocationProvider().onEach { indexedLocation ->
+                    Log.d("Location is ", "${indexedLocation.first}: ${indexedLocation.second}")
+                }.launchIn(this)
             }
         }
     }
