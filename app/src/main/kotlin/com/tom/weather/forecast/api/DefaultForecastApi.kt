@@ -52,4 +52,3 @@ class DefaultForecastApi(
         }
     }
 }
-//TODO create repository that uses the api to return a meaningful DTO for current forecast
