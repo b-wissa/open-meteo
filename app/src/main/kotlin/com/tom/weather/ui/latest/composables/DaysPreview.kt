@@ -1,6 +1,5 @@
 package com.tom.weather.ui.latest.composables
 
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,25 +23,25 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tom.weather.R
-import com.tom.weather.ui.latest.LatestWeatherViewModel.ViewState.Forecast
+import com.tom.weather.ui.latest.LatestWeatherViewModel.ViewState.ForecastState
 import com.tom.weather.ui.theme.WeatherTheme
 
 @Composable
-internal fun ColumnScope.DaysPreview(forecast: Forecast) {
-    when (forecast) {
+internal fun ColumnScope.DaysPreview(forecastState: ForecastState) {
+    when (forecastState) {
 
-        Forecast.Error,
-        Forecast.Loading -> {
+        ForecastState.Error,
+        ForecastState.Loading -> {
         }
 
-        is Forecast.Ready -> {
+        is ForecastState.Ready -> {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(forecast.days) { dayPreview ->
+                items(forecastState.days) { dayPreview ->
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -98,7 +97,7 @@ private fun PreviewDaysPreview() {
     WeatherTheme {
         Column(modifier = Modifier.background(color = MaterialTheme.colorScheme.background)) {
             DaysPreview(
-                Forecast.Ready(
+                ForecastState.Ready(
                     currentRealFeel = "13.5 C",
                     subtitle = null,
                     conditionDescription = null,
@@ -106,7 +105,7 @@ private fun PreviewDaysPreview() {
                     time = "time",
                     isDay = true,
                     days = listOf(
-                        Forecast.Ready.DayPreview(
+                        ForecastState.Ready.DayPreview(
                             date = "Mon 13.02",
                             realFeelMax = "10 C",
                             realFeelMin = "3 C",

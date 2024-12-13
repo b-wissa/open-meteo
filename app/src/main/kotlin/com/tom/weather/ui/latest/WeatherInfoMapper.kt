@@ -4,9 +4,9 @@ import com.tom.weather.R
 import com.tom.weather.common.model.CurrentForecast
 import com.tom.weather.common.model.WeatherCode
 import com.tom.weather.latest.usecase.LatestWeather
-import com.tom.weather.ui.latest.LatestWeatherViewModel.ViewState.Forecast
-import com.tom.weather.ui.latest.LatestWeatherViewModel.ViewState.Forecast.Ready.ConditionDescription
-import com.tom.weather.ui.latest.LatestWeatherViewModel.ViewState.Forecast.Ready.DayPreview
+import com.tom.weather.ui.latest.LatestWeatherViewModel.ViewState.ForecastState
+import com.tom.weather.ui.latest.LatestWeatherViewModel.ViewState.ForecastState.Ready.ConditionDescription
+import com.tom.weather.ui.latest.LatestWeatherViewModel.ViewState.ForecastState.Ready.DayPreview
 import java.time.format.DateTimeFormatter
 
 object WeatherInfoMapper {
@@ -15,19 +15,19 @@ object WeatherInfoMapper {
     private val hourMinuteFormatter = DateTimeFormatter.ofPattern(CURRENT_TIME_FORMAT)
     private val dateFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT)
 
-    fun map(weatherState: LatestWeather.WeatherState): Forecast {
+    fun map(weatherState: LatestWeather.WeatherState): ForecastState {
         return when (weatherState) {
             LatestWeather.WeatherState.Error -> {
-                Forecast.Error
+                ForecastState.Error
             }
 
             LatestWeather.WeatherState.Loading -> {
-                Forecast.Loading
+                ForecastState.Loading
             }
 
             is LatestWeather.WeatherState.Ready -> {
                 with(weatherState.forecast) {
-                    return@with Forecast.Ready(
+                    return@with ForecastState.Ready(
                         currentRealFeel = "${currentForecast.realFeel}",
                         subtitle = currentForecast.weatherCode.toResource(),
                         conditionDescription = currentForecast.getCondition(),

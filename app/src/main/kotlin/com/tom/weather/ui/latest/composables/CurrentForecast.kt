@@ -28,7 +28,7 @@ import com.tom.weather.R
 import com.tom.weather.common.model.IndexedLatLngLocation
 import com.tom.weather.common.model.LatLngLocation
 import com.tom.weather.ui.latest.LatestWeatherViewModel.ViewState
-import com.tom.weather.ui.latest.LatestWeatherViewModel.ViewState.Forecast.Ready.ConditionDescription
+import com.tom.weather.ui.latest.LatestWeatherViewModel.ViewState.ForecastState.Ready.ConditionDescription
 import com.tom.weather.ui.theme.WeatherTheme
 
 
@@ -51,7 +51,7 @@ internal fun CurrentForecast(viewState: ViewState) {
 
             Spacer(modifier = Modifier.height(16.dp))
             AnimatedContent(
-                targetState = viewState.forecast,
+                targetState = viewState.forecastState,
                 label = "forecast",
                 transitionSpec = {
                     slideInHorizontally { fullWidth -> fullWidth } + fadeIn() togetherWith
@@ -59,7 +59,7 @@ internal fun CurrentForecast(viewState: ViewState) {
                 }
             ) { forecast ->
                 Column {
-                    Forecast(forecast = forecast)
+                    Forecast(forecastState = forecast)
                 }
             }
 
@@ -71,10 +71,10 @@ internal fun CurrentForecast(viewState: ViewState) {
 
 
 @Composable
-private fun ColumnScope.Forecast(forecast: ViewState.Forecast) {
-    TopForecastInfo(forecast = forecast)
+private fun ColumnScope.Forecast(forecastState: ViewState.ForecastState) {
+    TopForecastInfo(forecastState = forecastState)
     Spacer(modifier = Modifier.height(16.dp))
-    DaysPreview(forecast = forecast)
+    DaysPreview(forecastState = forecastState)
 }
 
 @Composable
@@ -100,7 +100,7 @@ private fun PreviewCurrentForecast() {
                     latitude = 68.69,
                     longitude = 17.71
                 ),
-                forecast = ViewState.Forecast.Ready(
+                forecastState = ViewState.ForecastState.Ready(
                     currentRealFeel = "3.5 C",
                     subtitle = R.string.snow_fall,
                     conditionDescription = ConditionDescription(

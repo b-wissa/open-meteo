@@ -1,6 +1,5 @@
 package com.tom.weather.ui.latest.composables
 
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,16 +24,16 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import com.tom.weather.R
 import com.tom.weather.ui.latest.LatestWeatherViewModel.ViewState
-import com.tom.weather.ui.latest.LatestWeatherViewModel.ViewState.Forecast.Ready.ConditionDescription
+import com.tom.weather.ui.latest.LatestWeatherViewModel.ViewState.ForecastState.Ready.ConditionDescription
 import com.tom.weather.ui.theme.DayColor
 import com.tom.weather.ui.theme.NightColor
 
 @Composable
-internal fun TopForecastInfo(forecast: ViewState.Forecast) {
+internal fun TopForecastInfo(forecastState: ViewState.ForecastState) {
     val animatedColor by animateColorAsState(
         targetValue = when {
-            (forecast is ViewState.Forecast.Ready) -> {
-                if (forecast.isDay) {
+            (forecastState is ViewState.ForecastState.Ready) -> {
+                if (forecastState.isDay) {
                     DayColor
                 } else {
                     NightColor
@@ -62,24 +61,24 @@ internal fun TopForecastInfo(forecast: ViewState.Forecast) {
                 .padding(8.dp),
             verticalArrangement = Arrangement.Center,
         ) {
-            when (forecast) {
-                ViewState.Forecast.Error -> {
+            when (forecastState) {
+                ViewState.ForecastState.Error -> {
                     Text(
                         text = stringResource(R.string.could_not_load_location_forecast)
                     )
                 }
 
-                is ViewState.Forecast.Ready -> {
+                is ViewState.ForecastState.Ready -> {
                     CurrentWeather(
-                        realFeel = forecast.currentRealFeel,
-                        subtitle = forecast.subtitle,
-                        description = forecast.conditionDescription,
-                        windSpeed = forecast.wind,
-                        time = forecast.time,
+                        realFeel = forecastState.currentRealFeel,
+                        subtitle = forecastState.subtitle,
+                        description = forecastState.conditionDescription,
+                        windSpeed = forecastState.wind,
+                        time = forecastState.time,
                     )
                 }
 
-                ViewState.Forecast.Loading -> {
+                ViewState.ForecastState.Loading -> {
                     LinearProgressIndicator(
                         modifier = Modifier.fillMaxWidth(),
                     )

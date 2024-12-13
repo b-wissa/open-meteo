@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tom.weather.common.model.IndexedLatLngLocation
 import com.tom.weather.latest.usecase.GetLatestWeatherUseCase
-import com.tom.weather.ui.latest.LatestWeatherViewModel.ViewState.Forecast
+import com.tom.weather.ui.latest.LatestWeatherViewModel.ViewState.ForecastState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -17,7 +17,7 @@ class LatestWeatherViewModel(getLatestWeatherUseCase: GetLatestWeatherUseCase) :
     private val _viewState = MutableStateFlow<ViewState>(
         ViewState(
             location = null,
-            forecast = Forecast.Loading,
+            forecastState = ForecastState.Loading,
         )
     )
 
@@ -30,7 +30,7 @@ class LatestWeatherViewModel(getLatestWeatherUseCase: GetLatestWeatherUseCase) :
                     it.copy(
                         location = latestWeather.indexedLatLngLocation.first.plus(1)
                                 to latestWeather.indexedLatLngLocation.second,
-                        forecast = WeatherInfoMapper.map(weatherState = latestWeather.weatherState)
+                        forecastState = WeatherInfoMapper.map(weatherState = latestWeather.weatherState)
                     )
                 }
 
@@ -41,12 +41,12 @@ class LatestWeatherViewModel(getLatestWeatherUseCase: GetLatestWeatherUseCase) :
 
     data class ViewState(
         val location: IndexedLatLngLocation?,
-        val forecast: Forecast,
+        val forecastState: ForecastState,
     ) {
 
-        sealed interface Forecast {
-            data object Loading : Forecast
-            data object Error : Forecast
+        sealed interface ForecastState {
+            data object Loading : ForecastState
+            data object Error : ForecastState
             data class Ready(
                 val currentRealFeel: String,
                 @StringRes val subtitle: Int?,
@@ -55,7 +55,7 @@ class LatestWeatherViewModel(getLatestWeatherUseCase: GetLatestWeatherUseCase) :
                 val wind: String?,
                 val time: String,
                 val days: List<DayPreview>
-            ) : Forecast {
+            ) : ForecastState {
                 data class DayPreview(
                     val date: String,
                     val realFeelMax: String,
