@@ -9,12 +9,13 @@ import com.tom.weather.common.model.WeatherUnit
 import com.tom.weather.forecast.api.forecast.model.ApiForecastResponse
 import com.tom.weather.forecast.api.forecast.model.Daily
 import com.tom.weather.forecast.api.forecast.model.DailyUnits
+import com.tom.weather.util.appZoneId
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneId
 
 object ApiForecastMapper {
-    private val zoneId = ZoneId.of("UTC")
+
     fun mapForecastResponse(apiForecastResponse: ApiForecastResponse): Forecast {
         with(apiForecastResponse) {
             return Forecast(
@@ -63,7 +64,7 @@ object ApiForecastMapper {
         return try {
             daily.time.mapIndexed { index, time ->
                 DailyForecast(
-                    date = OffsetDateTime.ofInstant(Instant.ofEpochSecond(time), zoneId),
+                    date = OffsetDateTime.ofInstant(Instant.ofEpochSecond(time), appZoneId),
                     maxRealFeel = WeatherUnit(
                         value = daily.apparentTemperatureMax[index],
                         unit = dailyUnits.apparentTemperatureMax.orEmpty()
@@ -81,10 +82,10 @@ object ApiForecastMapper {
                         unit = dailyUnits.temperature2mMin.orEmpty()
                     ),
                     sunrise = OffsetDateTime.ofInstant(
-                        Instant.ofEpochSecond(daily.sunrise[index]), zoneId
+                        Instant.ofEpochSecond(daily.sunrise[index]), appZoneId
                     ),
                     sunset = OffsetDateTime.ofInstant(
-                        Instant.ofEpochSecond(daily.sunset[index]), zoneId
+                        Instant.ofEpochSecond(daily.sunset[index]), appZoneId
                     ),
                     weatherCode = daily.weatherCode[index].toWeatherCode()
                 )

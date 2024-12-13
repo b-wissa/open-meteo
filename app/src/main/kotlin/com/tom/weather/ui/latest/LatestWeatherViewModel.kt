@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
 
 class LatestWeatherViewModel(getLatestWeatherUseCase: GetLatestWeatherUseCase) :
     ViewModel() {
-    private val _viewState = MutableStateFlow<ViewState>(
+    private val _viewState = MutableStateFlow(
         ViewState(
             location = null,
             forecastState = ForecastState.Loading,

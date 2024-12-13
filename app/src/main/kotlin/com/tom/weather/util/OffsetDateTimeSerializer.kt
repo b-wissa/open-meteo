@@ -8,11 +8,10 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import java.time.Instant
 import java.time.OffsetDateTime
-import java.time.ZoneId
 
 
 object OffsetDateTimeSerializer : KSerializer<OffsetDateTime> {
-    private val utcZone = ZoneId.of("UTC")
+
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor(
             serialName = "com.tom.weather.DateTime",
@@ -21,7 +20,7 @@ object OffsetDateTimeSerializer : KSerializer<OffsetDateTime> {
 
     override fun deserialize(decoder: Decoder): OffsetDateTime {
         val long = decoder.decodeLong()
-        return OffsetDateTime.ofInstant(Instant.ofEpochSecond(long), utcZone)
+        return OffsetDateTime.ofInstant(Instant.ofEpochSecond(long), appZoneId)
     }
 
     override fun serialize(encoder: Encoder, value: OffsetDateTime) {
