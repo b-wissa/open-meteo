@@ -15,6 +15,8 @@ The Displayed forecast info are the following:
 #### Improvements todo
 1. When tapping on a day item from the list can display a detail view of this day.
 2. displaying city name from coordinates.
-3. use a widget or a notification and use a background worker (interval would be 15 minutes) and looping locations to update the widget/notification current weather condition.
-3. Using library modules (for example a module for network, module for location providing, module for latest weather, etc..)
-4. Add more tests for example mappers and the repository.
+3. Use more of the api fields in the UI
+4. Use Icons for some weather features like rain, snow, thunderstorms etc..
+5. use a widget or a notification and use a background worker (interval would be 15 minutes) and looping locations to update the widget/notification current weather condition.
+6. Using library modules (for example a module for network, module for location providing, module for latest weather, etc..)
+7. Add more tests for example mappers and the repository.
