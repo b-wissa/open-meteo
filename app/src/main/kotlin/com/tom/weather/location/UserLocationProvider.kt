@@ -1,6 +1,6 @@
 package com.tom.weather.location
 
-import com.tom.weather.model.IndexedLatLngLocation
+import com.tom.weather.common.model.IndexedLatLngLocation
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow

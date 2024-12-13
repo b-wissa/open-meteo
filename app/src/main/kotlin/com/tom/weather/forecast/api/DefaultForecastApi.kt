@@ -1,8 +1,7 @@
-package com.tom.weather.api.forecast
+package com.tom.weather.forecast.api
 
-import com.tom.weather.api.ApiError
-import com.tom.weather.api.ForecastApiResponse
-import com.tom.weather.model.LatLngLocation
+import com.tom.weather.common.model.LatLngLocation
+import com.tom.weather.forecast.api.forecast.model.ApiForecastResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -18,7 +17,7 @@ class DefaultForecastApi(
         latLngLocation: LatLngLocation,
         currentFields: List<ForecastApi.CurrentField>,
         dailyFields: List<ForecastApi.DailyField>
-    ): Result<ForecastApiResponse> = runCatching {
+    ): Result<ApiForecastResponse> = runCatching {
         val response = httpClient.get {
             method = HttpMethod.Get
             url {
@@ -39,13 +38,18 @@ class DefaultForecastApi(
                     ForecastApi.QUERY_DAILY,
                     dailyFields.joinToString(separator = ",", transform = { it.apiValue })
                 )
+                parameters.append(
+                    ForecastApi.QUERY_TIME_FORMAT,
+                    ForecastApi.UNIX_TIME_FORMAT
+                )
             }
 
         }
         if (response.status.isSuccess()) {
-            response.body<ForecastApiResponse>()
+            response.body<ApiForecastResponse>()
         } else {
             throw (response.body<ApiError>())
         }
     }
 }
+//TODO create repository that uses the api to return a meaningful DTO for current forecast

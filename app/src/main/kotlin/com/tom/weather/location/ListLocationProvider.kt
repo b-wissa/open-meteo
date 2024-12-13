@@ -1,7 +1,7 @@
 package com.tom.weather.location
 
-import com.tom.weather.model.IndexedLatLngLocation
-import com.tom.weather.model.LatLngLocation
+import com.tom.weather.common.model.IndexedLatLngLocation
+import com.tom.weather.common.model.LatLngLocation
 
 internal class ListLocationProvider(
     private val locations: List<LatLngLocation> = defaultLocations,

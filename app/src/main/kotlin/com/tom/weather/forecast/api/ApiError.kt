@@ -1,4 +1,4 @@
-package com.tom.weather.api
+package com.tom.weather.forecast.api
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

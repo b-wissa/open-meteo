@@ -1,8 +1,8 @@
 package com.tom.weather
 
 import com.tom.weather.location.ListLocationProvider
-import com.tom.weather.model.IndexedLatLngLocation
-import com.tom.weather.model.LatLngLocation
+import com.tom.weather.common.model.IndexedLatLngLocation
+import com.tom.weather.common.model.LatLngLocation
 import org.junit.Test
 
 import org.junit.Assert.*

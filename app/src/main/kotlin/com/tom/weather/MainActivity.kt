@@ -15,9 +15,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.tom.weather.api.forecast.ForecastApi
+import com.tom.weather.forecast.api.ForecastApi
 import com.tom.weather.location.UserLocationProvider
-import com.tom.weather.model.LatLngLocation
+import com.tom.weather.common.model.LatLngLocation
 import com.tom.weather.ui.theme.WeatherTheme
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
