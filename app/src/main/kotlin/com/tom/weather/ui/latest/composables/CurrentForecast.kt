@@ -1,9 +1,13 @@
 package com.tom.weather.ui.latest.composables
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Column
@@ -38,15 +42,27 @@ internal fun CurrentForecast(viewState: ViewState) {
                 targetState = location,
                 label = "location_title",
                 transitionSpec = {
-                    slideInVertically { fullHeight -> fullHeight } + fadeIn() togetherWith
-                            slideOutVertically { fullHeight -> fullHeight } + fadeOut()
+                    slideInVertically(animationSpec = spring(stiffness = Spring.StiffnessLow)) { fullHeight -> fullHeight } + fadeIn() togetherWith
+                            slideOutVertically(animationSpec = spring(stiffness = Spring.StiffnessLow)) { fullHeight -> fullHeight } + fadeOut()
                 }
             ) { indexedLatLngLocation ->
                 LocationTitle(location = indexedLatLngLocation)
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-            Forecast(forecast = viewState.forecast)
+            AnimatedContent(
+                targetState = viewState.forecast,
+                label = "forecast",
+                transitionSpec = {
+                    slideInHorizontally { fullWidth -> fullWidth } + fadeIn() togetherWith
+                            slideOutHorizontally { fullWidth -> fullWidth } + fadeOut()
+                }
+            ) { forecast ->
+                Column {
+                    Forecast(forecast = forecast)
+                }
+            }
+
         }
     } else {
         LoadingLocation()

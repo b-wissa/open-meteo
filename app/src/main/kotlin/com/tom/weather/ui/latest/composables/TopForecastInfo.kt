@@ -2,7 +2,6 @@ package com.tom.weather.ui.latest.composables
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -55,40 +54,35 @@ internal fun TopForecastInfo(forecast: ViewState.Forecast) {
             .fillMaxWidth()
             .padding(8.dp)
     ) {
-        AnimatedContent(
-            targetState = forecast,
-            label = "forecast",
 
-            ) { forecastState ->
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(min = 100.dp)
-                    .padding(8.dp),
-                verticalArrangement = Arrangement.Center,
-            ) {
-                when (forecastState) {
-                    ViewState.Forecast.Error -> {
-                        Text(
-                            text = stringResource(R.string.could_not_load_location_forecast)
-                        )
-                    }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 100.dp)
+                .padding(8.dp),
+            verticalArrangement = Arrangement.Center,
+        ) {
+            when (forecast) {
+                ViewState.Forecast.Error -> {
+                    Text(
+                        text = stringResource(R.string.could_not_load_location_forecast)
+                    )
+                }
 
-                    is ViewState.Forecast.Ready -> {
-                        CurrentWeather(
-                            realFeel = forecastState.currentRealFeel,
-                            subtitle = forecastState.subtitle,
-                            description = forecastState.conditionDescription,
-                            windSpeed = forecastState.wind,
-                            time = forecastState.time,
-                        )
-                    }
+                is ViewState.Forecast.Ready -> {
+                    CurrentWeather(
+                        realFeel = forecast.currentRealFeel,
+                        subtitle = forecast.subtitle,
+                        description = forecast.conditionDescription,
+                        windSpeed = forecast.wind,
+                        time = forecast.time,
+                    )
+                }
 
-                    ViewState.Forecast.Loading -> {
-                        LinearProgressIndicator(
-                            modifier = Modifier.fillMaxWidth(),
-                        )
-                    }
+                ViewState.Forecast.Loading -> {
+                    LinearProgressIndicator(
+                        modifier = Modifier.fillMaxWidth(),
+                    )
                 }
             }
         }

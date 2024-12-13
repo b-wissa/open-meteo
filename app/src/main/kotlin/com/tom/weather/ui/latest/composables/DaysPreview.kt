@@ -29,62 +29,59 @@ import com.tom.weather.ui.theme.WeatherTheme
 
 @Composable
 internal fun ColumnScope.DaysPreview(forecast: Forecast) {
-    AnimatedContent(targetState = forecast, label = "days") { forecast ->
-        when (forecast) {
+    when (forecast) {
 
-            Forecast.Error,
-            Forecast.Loading -> {
-            }
+        Forecast.Error,
+        Forecast.Loading -> {
+        }
 
-            is Forecast.Ready -> {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(forecast.days) { dayPreview ->
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .defaultMinSize(minHeight = 42.dp)
-                                .padding(horizontal = 8.dp)
-                                .animateItem()
-                        ) {
-                            with(dayPreview) {
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(16.dp),
-                                    verticalArrangement = Arrangement.Center
+        is Forecast.Ready -> {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(forecast.days) { dayPreview ->
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .defaultMinSize(minHeight = 42.dp)
+                            .padding(horizontal = 8.dp)
+                    ) {
+                        with(dayPreview) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically,
                                 ) {
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                    ) {
-                                        Text(
-                                            text = date,
-                                            style = MaterialTheme.typography.labelLarge
+                                    Text(
+                                        text = date,
+                                        style = MaterialTheme.typography.labelLarge
+                                    )
+                                    Spacer(modifier = Modifier.width(4.dp))
+                                    Text(
+                                        text = stringResource(
+                                            R.string.real_feel_max_short,
+                                            realFeelMax
                                         )
-                                        Spacer(modifier = Modifier.width(4.dp))
-                                        Text(
-                                            text = stringResource(
-                                                R.string.real_feel_max_short,
-                                                realFeelMax
-                                            )
+                                    )
+                                    Spacer(modifier = Modifier.width(4.dp))
+                                    Text(
+                                        text = stringResource(
+                                            R.string.real_feel_min_short,
+                                            realFeelMax
                                         )
-                                        Spacer(modifier = Modifier.width(4.dp))
-                                        Text(
-                                            text = stringResource(
-                                                R.string.real_feel_min_short,
-                                                realFeelMax
-                                            )
-                                        )
-                                    }
-                                    description?.let {
-                                        Spacer(modifier = Modifier.height(8.dp))
-                                        Text(text = stringResource(it))
-                                    }
+                                    )
+                                }
+                                description?.let {
+                                    Spacer(modifier = Modifier.height(8.dp))
+                                    Text(text = stringResource(it))
                                 }
                             }
                         }
@@ -93,7 +90,6 @@ internal fun ColumnScope.DaysPreview(forecast: Forecast) {
             }
         }
     }
-
 }
 
 @Preview
