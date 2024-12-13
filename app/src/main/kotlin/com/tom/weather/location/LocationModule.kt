@@ -1,8 +1,6 @@
 package com.tom.weather.location
 
 
-import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.bind
 import org.koin.dsl.module
 
 val locationModule = module {

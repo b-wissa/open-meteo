@@ -2,6 +2,7 @@ package com.tom.weather
 
 import android.app.Application
 import com.tom.weather.location.locationModule
+import com.tom.weather.network.networkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -12,7 +13,9 @@ class WeatherApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@WeatherApplication)
-            modules(locationModule)
+            modules(
+                appModule,
+            )
         }
     }
 }

@@ -15,7 +15,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.tom.weather.api.forecast.ForecastApi
 import com.tom.weather.location.UserLocationProvider
+import com.tom.weather.model.LatLngLocation
 import com.tom.weather.ui.theme.WeatherTheme
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -24,6 +26,7 @@ import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
     private val userLocationProvider: UserLocationProvider by inject()
+    private val forecastApi: ForecastApi by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -41,6 +44,13 @@ class MainActivity : ComponentActivity() {
             repeatOnLifecycle(state = Lifecycle.State.RESUMED) {
                 userLocationProvider().onEach { indexedLocation ->
                     Log.d("Location is ", "${indexedLocation.first}: ${indexedLocation.second}")
+                    val elevation = forecastApi.getForecast(
+                        latLngLocation = LatLngLocation(
+                            latitude = indexedLocation.second.latitude,
+                            longitude = indexedLocation.second.longitude
+                        ),
+                    )
+                    Log.d("elevation", elevation.toString())
                 }.launchIn(this)
             }
         }
