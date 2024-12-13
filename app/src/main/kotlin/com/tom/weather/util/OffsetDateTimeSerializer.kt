@@ -32,7 +32,3 @@ object OffsetDateTimeSerializer : KSerializer<OffsetDateTime> {
         encoder.encodeLong(long)
     }
 }
-
-
-object OffsetDateTimeListSerializer :
-    KSerializer<List<OffsetDateTime>> by ListSerializer(OffsetDateTimeSerializer)

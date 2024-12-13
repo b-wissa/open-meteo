@@ -1,7 +1,6 @@
 package com.tom.weather.forecast.api.forecast.model
 
 
-import com.tom.weather.util.OffsetDateTimeSerializer
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -23,7 +22,6 @@ data class Current(
     val snowfall: Double,
     @SerialName("temperature_2m")
     val temperature2m: Double,
-    //@Serializable(with = OffsetDateTimeSerializer::class)
     @Contextual
     @SerialName("time")
     val time: OffsetDateTime,

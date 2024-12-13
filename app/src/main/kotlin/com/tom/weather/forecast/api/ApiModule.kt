@@ -6,11 +6,6 @@ import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
-val forecastApiModule = module {
+internal val forecastApiModule = module {
     factoryOf(::DefaultForecastApi) { bind<ForecastApi>() }
 }
-
-@Serializable
-data class ForecastApiResponse(
-    @SerialName("elevation") val elevation: Double,
-)
