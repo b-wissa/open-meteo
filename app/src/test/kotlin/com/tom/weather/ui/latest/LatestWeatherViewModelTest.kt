@@ -96,13 +96,20 @@ class LatestWeatherViewModelTest {
             val secondForecastReadyMock: ForecastState.Ready = mockk()
             every {
                 WeatherInfoMapper.map(LatestWeather.WeatherState.Ready(forecast = secondForecast))
-            } returns forecastReadyMock
+            } returns secondForecastReadyMock
 
             latestWeatherFlow.emit(
                 LatestWeather(
-                    indexedLatLngLocation = 2 to secondLocation,
+                    indexedLatLngLocation = 1 to secondLocation,
                     weatherState = LatestWeather.WeatherState.Ready(forecast = secondForecast)
                 )
+            )
+            val actualSecondState = awaitItem()
+            assertEquals(
+                ViewState(
+                    location = 2 to secondLocation,
+                    forecastState = secondForecastReadyMock,
+                ), actualSecondState
             )
             cancelAndIgnoreRemainingEvents()
         }

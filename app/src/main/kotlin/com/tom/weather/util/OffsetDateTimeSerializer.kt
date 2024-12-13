@@ -9,11 +9,9 @@ import kotlinx.serialization.encoding.Encoder
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 
 object OffsetDateTimeSerializer : KSerializer<OffsetDateTime> {
-    private val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")
     private val utcZone = ZoneId.of("UTC")
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor(
