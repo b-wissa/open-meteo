@@ -33,7 +33,12 @@ data class DailyForecast(
     val weatherCode: WeatherCode?,
 )
 
-data class WeatherUnit(val value: Double, val unit: String)
+data class WeatherUnit(val value: Double, val unit: String) {
+    override fun toString(): String {
+        return "$value $unit"
+    }
+}
+
 enum class WeatherCode(val value: Int) {
     CLEAR_SKY(0),
     MAINLY_CLEAR(1),
@@ -47,7 +52,7 @@ enum class WeatherCode(val value: Int) {
     FREEZING_DRIZZLE_LIGHT(56),
     FREEZING_DRIZZLE_DENSE(57),
     RAIN_SLIGHT(61),
-    RAIL_MODERATE(63),
+    RAIN_MODERATE(63),
     RAIN_HEAVY(65),
     FREEZING_RAIN_LIGHT(66),
     FREEZING_RAIN_HEAVY(67),
