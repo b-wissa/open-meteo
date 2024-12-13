@@ -1,11 +1,11 @@
-package com.tom.weather
+package com.tom.weather.location
 
-import com.tom.weather.location.ListLocationProvider
 import com.tom.weather.common.model.IndexedLatLngLocation
 import com.tom.weather.common.model.LatLngLocation
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
-import org.junit.Assert.*
+
 
 /**
  * Example local unit test, which will execute on the development machine (host).
